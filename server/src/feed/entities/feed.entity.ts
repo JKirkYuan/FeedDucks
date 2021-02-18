@@ -19,6 +19,4 @@ export class Feed extends BaseEntity {
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timeFed: Date;
-
-  // @UpdateDateColumn({ name: 'updated_at' }) 'updated_at': Date;
 }

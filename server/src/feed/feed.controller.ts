@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 import { FeedService } from './feed.service';
 import { CreateFeedDto } from './dto/create-feed.dto';
-// import { UpdateFeedDto } from './dto/update-feed.dto';
+import { UpdateFeedDto } from './dto/update-feed.dto';
 
 @Controller('feed')
 export class FeedController {
@@ -25,18 +25,18 @@ export class FeedController {
     return this.feedService.findAll();
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.feedService.findOne(+id);
-  // }
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.feedService.findOne(+id);
+  }
 
-  // @Put(':id')
-  // update(@Param('id') id: string, @Body() updateFeedDto: UpdateFeedDto) {
-  //   return this.feedService.update(+id, updateFeedDto);
-  // }
+  @Put(':id')
+  update(@Param('id') id: string, @Body() updateFeedDto: UpdateFeedDto) {
+    return this.feedService.update(+id, updateFeedDto);
+  }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.feedService.remove(+id);
-  // }
+  @Delete(':id')
+  remove(@Param('id') id: string) {
+    return this.feedService.remove(+id);
+  }
 }

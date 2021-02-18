@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FeedRepository } from './feed.repository';
 import { CreateFeedDto } from './dto/create-feed.dto';
 import { Feed } from './entities/feed.entity';
-// import { UpdateFeedDto } from './dto/update-feed.dto';
+import { UpdateFeedDto } from './dto/update-feed.dto';
 
 @Injectable()
 export class FeedService {
@@ -20,15 +20,30 @@ export class FeedService {
     return this.feedRepository.getFeed();
   }
 
-  // findOne(id: number) {
-  //   return `This action returns a #${id} feed`;
-  // }
+  async findOne(id: number) {
+    const found = await this.feedRepository.findOne(id);
 
-  // update(id: number, updateFeedDto: UpdateFeedDto) {
-  //   return `This action updates a #${id} feed`;
-  // }
+    if (!found) {
+      throw new NotFoundException(`Feed with ID ${id} not found`);
+    }
 
-  // remove(id: number) {
-  //   return `This action removes a #${id} feed`;
-  // }
+    return found;
+  }
+
+  async update(id: number, updateFeedDto: UpdateFeedDto) {
+    const feed = await this.findOne(id);
+
+    return this.feedRepository.save({
+      ...feed,
+      ...updateFeedDto,
+    });
+  }
+
+  async remove(id: number) {
+    const result = await this.feedRepository.delete(id);
+
+    if (result.affected === 0) {
+      throw new NotFoundException(`Feed with ID ${id} not found`);
+    }
+  }
 }
