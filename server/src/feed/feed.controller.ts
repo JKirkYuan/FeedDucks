@@ -17,7 +17,6 @@ export class FeedController {
 
   @Post('/')
   create(@Body() createFeedDto: CreateFeedDto) {
-    console.log(createFeedDto);
     return this.feedService.create(createFeedDto);
   }
 

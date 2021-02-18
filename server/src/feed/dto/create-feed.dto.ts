@@ -12,4 +12,6 @@ export class CreateFeedDto {
 
   @IsNotEmpty()
   foodCount: number;
+
+  timeFed: Date;
 }

@@ -21,12 +21,13 @@ export class FeedRepository extends Repository<Feed> {
   }
 
   async createFeed(createFeedDto: CreateFeedDto): Promise<Feed> {
-    const { food, location, duckCount, foodCount } = createFeedDto;
+    const { food, location, duckCount, foodCount, timeFed } = createFeedDto;
     const feed = new Feed();
     feed.food = food;
     feed.location = location;
     feed.duckCount = duckCount;
     feed.foodCount = foodCount;
+    feed.timeFed = timeFed;
     await feed.save();
     return feed;
   }

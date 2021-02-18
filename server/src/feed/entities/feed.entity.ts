@@ -1,10 +1,4 @@
-import {
-  Entity,
-  BaseEntity,
-  PrimaryGeneratedColumn,
-  Column,
-  CreateDateColumn,
-} from 'typeorm';
+import { Entity, BaseEntity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Feed extends BaseEntity {
@@ -23,7 +17,7 @@ export class Feed extends BaseEntity {
   @Column()
   foodCount: number;
 
-  @CreateDateColumn({ name: 'timeFed' })
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   timeFed: Date;
 
   // @UpdateDateColumn({ name: 'updated_at' }) 'updated_at': Date;
