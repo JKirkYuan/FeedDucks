@@ -8,13 +8,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import UpdateDuckDialog from '../Dialog/UpdateDuckDialog';
 
-const FeedList = ({ Feeds }) => {
+const FeedList = ({ feeds, updateFeedList }) => {
   const [isUpdateDialogOpen, setUpdateDialog] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState({});
 
   const updateFeed = (id) => {
     setUpdateDialog(true);
-    const row = Feeds.find((feed) => feed.id === id);
+    const row = feeds.find((feed) => feed.id === id);
     setSelectedRow(row);
   };
 
@@ -32,7 +32,7 @@ const FeedList = ({ Feeds }) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {Feeds.map((row) => (
+            {feeds.map((row) => (
               <TableRow
                 key={row.id}
                 onClick={() => updateFeed(row.id)}
@@ -55,7 +55,8 @@ const FeedList = ({ Feeds }) => {
         update={setUpdateDialog}
         currRow={selectedRow}
         setCurrRow={setSelectedRow}
-        feeds={Feeds}
+        feeds={feeds}
+        updateFeedList={updateFeedList}
       />
     </>
   );

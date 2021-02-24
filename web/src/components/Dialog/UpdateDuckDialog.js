@@ -8,7 +8,14 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
-const UpdateDuckDialog = ({ open, update, currRow, setCurrRow, feeds }) => {
+const UpdateDuckDialog = ({
+  open,
+  update,
+  currRow,
+  setCurrRow,
+  feeds,
+  updateFeedList,
+}) => {
   const [inputState, updateInput] = React.useState({ ...currRow });
 
   React.useEffect(() => {
@@ -20,26 +27,48 @@ const UpdateDuckDialog = ({ open, update, currRow, setCurrRow, feeds }) => {
     setCurrRow({});
   };
 
-  const handleSubmit = async () => {
+  const handleDelete = async () => {
     try {
-      const res = await axios.put(
+      const res = await axios.delete(
         `http://localhost:5000/feed/${currRow.id}`,
         inputState
       );
 
-      let idx = feeds.findIndex((feed) => feed.id === currRow.id);
-      feeds[idx] = res.data;
+      if (!res || res.status !== 200) {
+        throw new Error('Failed to delete');
+      }
 
-      // const newFeed = res.data;
-      // if (res.status !== 201 || !newFeed || !res) {
-      //   throw new Error('Unable to create');
-      // }
+      let updateFeeds = feeds;
+      let idx = updateFeeds.findIndex((feed) => feed.id === currRow.id);
+      updateFeeds.splice(idx, 1);
+
+      updateFeedList(updateFeeds);
 
       handleClose();
     } catch (e) {
       console.error(e);
     }
   };
+
+  const handleUpdate = async () => {
+    try {
+      const res = await axios.put(
+        `http://localhost:5000/feed/${currRow.id}`,
+        inputState
+      );
+
+      let updateFeeds = feeds;
+      let idx = updateFeeds.findIndex((feed) => feed.id === currRow.id);
+      updateFeeds[idx] = res.data;
+
+      updateFeedList(updateFeeds);
+
+      handleClose();
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <Dialog
       open={open}
@@ -124,10 +153,13 @@ const UpdateDuckDialog = ({ open, update, currRow, setCurrRow, feeds }) => {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose} color="primary">
+        <Button onClick={handleDelete} color="secondary" variant="outlined">
+          Delete
+        </Button>
+        <Button onClick={handleClose} color="primary" variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleSubmit} color="primary">
+        <Button onClick={handleUpdate} color="primary" variant="outlined">
           Update
         </Button>
       </DialogActions>

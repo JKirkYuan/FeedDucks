@@ -31,7 +31,11 @@ function App() {
     <Container>
       <Header update={setAddDialogOpen} />
       <Content>
-        {errorState ? <div>Error</div> : <FeedList Feeds={feedList} />}
+        {errorState ? (
+          <div>Error</div>
+        ) : (
+          <FeedList feeds={feedList} updateFeedList={updateFeedList} />
+        )}
         <CreateDuckDialog
           open={isAddDialogOpen}
           update={setAddDialogOpen}
