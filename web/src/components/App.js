@@ -3,10 +3,12 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Header from './Header/Header';
 import FeedList from './FeedList/FeedList';
+import CreateDuckDialog from './Dialog/CreateDuckDialog';
 
 function App() {
   const [feedList, updateFeedList] = React.useState([]);
   const [errorState, setError] = React.useState(false);
+  const [isAddDialogOpen, updateAddDialogOpen] = React.useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -24,9 +26,14 @@ function App() {
 
   return (
     <Container>
-      <Header />
+      <Header update={updateAddDialogOpen} />
       <Content>
         {errorState ? <div>Error</div> : <FeedList Feeds={feedList} />}
+        <CreateDuckDialog
+          open={isAddDialogOpen}
+          update={updateAddDialogOpen}
+          updateFeedList={updateFeedList}
+        />
       </Content>
     </Container>
   );
