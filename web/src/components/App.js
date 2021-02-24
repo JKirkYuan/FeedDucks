@@ -8,7 +8,7 @@ import CreateDuckDialog from './Dialog/CreateDuckDialog';
 function App() {
   const [feedList, updateFeedList] = React.useState([]);
   const [errorState, setError] = React.useState(false);
-  const [isAddDialogOpen, updateAddDialogOpen] = React.useState(false);
+  const [isAddDialogOpen, setAddDialogOpen] = React.useState(false);
 
   React.useEffect(() => {
     const fetchData = async () => {
@@ -18,6 +18,9 @@ function App() {
       if (!res || res.status !== 200 || !res.data) {
         setError(true);
       }
+
+      res.data.sort((a, b) => a.id - b.id);
+
       updateFeedList(res.data);
     };
 
@@ -26,12 +29,12 @@ function App() {
 
   return (
     <Container>
-      <Header update={updateAddDialogOpen} />
+      <Header update={setAddDialogOpen} />
       <Content>
         {errorState ? <div>Error</div> : <FeedList Feeds={feedList} />}
         <CreateDuckDialog
           open={isAddDialogOpen}
-          update={updateAddDialogOpen}
+          update={setAddDialogOpen}
           updateFeedList={updateFeedList}
         />
       </Content>
