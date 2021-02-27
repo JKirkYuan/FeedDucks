@@ -1,8 +1,6 @@
-# Feed Ducks
+# Feed Ducks BE
 
-## Description
-
-An application that allows user to record how they feed ducks around the world
+This is the back-end for Feed Ducks, a simple data display of the different ducks being fed around the world
 
 ## Features (Use Cases)
 
