@@ -12,6 +12,8 @@ An application that allows user to record how they feed ducks around the world
 
 - **TypeORM** - TypeScript integration, easy to write and read to database
 
+Backend routes found in [server/README.md](server/README.md)
+
 ### Front-end
 
 - **React** - My most enjoyed library to create front end applications
